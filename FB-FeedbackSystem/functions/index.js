@@ -271,4 +271,4 @@ exports.checkAuthorization = functions.https.onCall((data, context) => {
 //  response.send("Hello from Firebase!");
 // });
 
-exports.app = functions.https.onRequest(app);
+exports.app = functions.https.onRequest(app); 
