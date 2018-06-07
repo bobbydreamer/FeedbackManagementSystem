@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- https://mdbootstrap.com/previews/templates/admin-dashboard/html/dashboards/v-1.html -->
+
+<head>
+    <% include partials/template/head.ejs %>
+
+    <!-- Your custom styles (optional) -->
+    <style>
+
+        table:hover {
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+        }
+
+        table {
+            border-collapse: collapse;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+            transition: 0.3s;
+            width: 40%;
+            background: #dc3545; color:#fff;            
+        }
+
+        table, td, th { padding:5px; }
+
+    </style>
+    
+</head>
+
+<body id="<%= pageID %>" class="fixed-sn white-skin" style="display:none">
+
+    <!--Main Navigation-->
+    <header>
+        <% include partials/template/navs.ejs %>
+    </header>
+    <!--Main Navigation-->
+
+    <!--Main layout-->
+    <main>
+        <div class="container-fluid">
+            <!--Section: Title 1-->
+            <section class="mb-3">
+            <!--Grid row-->
+            <div class="row">
+                    <h1 class="ml-1" id="title1">Profile</h1>
+                </div>
+                <!--Grid row-->                    
+            </section>
+            
+            <!--Section: Unread Cards with counts -->
+            <section class="mt-lg-2" id="unreadCounts">
+    
+                <!--Grid row-->
+                <div class="row " id="appCounts-placeholder">
+                    <table class="updates incident">
+                        <tbody>
+                            <tr>
+                                <td class="yellow-text" colspan=5>Please put a valid address in the email field, or we won't be able to reset your password. We don't send verification emails automatically, click verify if you want to get your emais verified.</td>
+                            </tr>
+
+                            <tr>
+                                <td class="tbName">LastLogin</td>
+                                <td class="tdCname" colspan=3 id="lblLastLogin"></td>
+                            </tr>
+                            
+                            <tr>
+                                <td class="tbName">Name</td>
+                                <td class="tdCname"><input size=50 maxlength=50 type="text" id="txtCname" placeholder="Old name" readonly></td>
+                                <td class="tdNname"><input size=50 maxlength=50 type="text" id="txtNname" placeholder="New name"></td>
+                                <td class="tdAction"><button id="btnNameUpdate" type="button" class="btn btn-elegant btn-sm">update</button></td>
+                            </tr>
+                                        
+                            <tr>
+                                <td class="tbEmail">Email</td>
+                                <td class="tdCemail"><input size=50 maxlength=50 type="text" id="txtCemail" placeholder="Old email" readonly></td>
+                                <td class="tdNemail"><input size=50 maxlength=50 type="text" id="txtNemail" placeholder="New email"></td>
+                                <td class="tdAction"><button id="btnEmailUpdate" type="button" class="btn btn-elegant btn-sm">update</button></td>
+                                <td class="tdAction"><button id="btnVerify" type="button" class="btn btn-elegant btn-sm">verify</button></td>
+                            </tr>
+
+                            <tr id="trPassword" style="display:none">
+                                <td class="tbPassword">Password</td>
+                                <td class="tdNpassword"><input size=50 maxlength=50 type="password" id="txtNpassword" placeholder="New password"></td>
+                                <td class="tdAction"><button id="btnPasswordUpdate" type="button" class="btn btn-elegant btn-sm">update</button></td>
+                            </tr>
+
+                            <tr>
+                                <td colspan=10 class="text-center"><span class="yellow-text font-weight-bold" id="txtStatus"></span></td>
+                            </tr>
+
+                        </tbody>
+                      </table>                    
+                </div>
+                <!--Grid row-->
+                            
+            </section>
+            <!--Section: Unread Cards with counts -->
+
+            <div style="height: 250px"></div>
+        </div>
+    </main>
+    <!--Main layout-->
+
+    <!--Footer-->
+    <% include partials/template/footer.ejs %>
+
+    <!-- Custom Javascripts -->
+    <script type="text/javascript" src="../js/fbs-common.js"></script>
+    <script type="text/javascript" src="../js/profile.js"></script>
+    
+</body>
+
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- https://mdbootstrap.com/previews/templates/admin-dashboard/html/dashboards/v-1.html -->
+
+<head>
+    <% include partials/template/head.ejs %>
+
+    <!-- Your custom styles (optional) -->
+    <style>
+
+        select.browser-default {
+            display: inline!important;
+            font-size: .74rem;
+            background-color: transparent;
+            color: #2bbbad;
+            border: 2px solid #2bbbad!important;
+            padding: .38rem;
+            margin: .375rem;
+        }
+
+        option:disabled, select[disabled] > option {
+            color: #6c757d;
+        }
+
+        option{
+            color:#000;
+        }
+
+        .date-align {
+            text-align: right!important;
+        }
+
+        @media only screen and (max-width: 800px) {
+            .date-align { text-align: left!important; }
+        }
+
+    </style>
+    
+</head>
+
+<body id="<%= pageID %>" class="fixed-sn white-skin" style="display:none">
+
+    <!--Main Navigation-->
+    <header>
+        <% include partials/template/navs.ejs %>
+    </header>
+    <!--Main Navigation-->
+
+    <!--Main layout-->
+    <main>
+        <div class="container-fluid">
+            <section class="mb-3" style="display:none">
+                    
+                <div class="card bg-danger text-center section-heading mb-4 pt-2 pb-2">
+                        <div class="card-block">
+                            <p id="broadcast" class="white-text mb-0">Hey there! This section was updated recently. If you're looking for 4.2.0 docs please <a class="text-white" href="/feedback/hello"><strong>visit this site</strong></a></p>
+                        </div>
+                </div>                        
+            </section>
+
+            <!--Section: Title 1-->
+            <section class="mb-3">
+            <!--Grid row-->
+            <div class="row">
+                    <h1 class="ml-1" id="title1">Applications</h1>
+                </div>
+                <!--Grid row-->                    
+            </section>
+            
+            <!--Section: Unread Cards with counts -->
+            <section class="mt-lg-2" id="unreadCounts">
+    
+                <!--Grid row-->
+                <div class="row" id="appCounts-placeholder"></div>
+                <!--Grid row-->
+                            
+            </section>
+            <!--Section: Unread Cards with counts -->
+
+            <!--Section: Title 2-->
+            <section class="mt-5">
+                <!--Grid row-->
+                <div class="row">
+                        <h1 class="ml-1" id="title2">All latest feedbacks</h1>
+                </div>
+                <!--Grid row-->                    
+            </section>
+
+            <!--Section: Latest feedback cards -->
+            <section class="mt-lg-2" id="latest200Messages-placeholder"></section>            
+
+            <div style="height: 5px"></div>
+        </div>
+    </main>
+    <!--Main layout-->
+
+    <!--Footer-->
+    <% include partials/template/footer.ejs %>
+
+    <!-- Custom Javascripts -->
+    <script type="text/javascript" src="../js/fbs-common.js"></script>
+    <script defer type="text/javascript" src="../js/feedback.js"></script>
+    
+</body>
+
+</html>

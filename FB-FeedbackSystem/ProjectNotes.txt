@@ -1,0 +1,94 @@
+Firebase Setup Process
+1. Create folder
+2. firebase init hosting 
+3. firebase init functions
+4. cd functions 
+5. npm install express --save
+
+Local : firebase serve --only functions,hosting
+Deploy: firebase deploy --only functions,hosting
+
+https://firebase.google.com/docs/auth/admin/verify-id-tokens
+https://firebase.google.com/docs/hosting/full-config#section-full-firebasejson
+https://firebase.google.com/docs/hosting/full-config
+
+
+When this error is encountered in firebase
+Error: Server Error. getaddrinfo ENOTFOUND admin.firebase.com admin.firebase.com:443
+Ans: Just check your internet connection is active and wait for few minutes and execute teh command again.
+
+Firebase to write a delay of 2seconds is required atleast before going to new webpage(Authpage)
+setTimeout( () => {
+    //console.log('Routing to /stash')
+    window.location = "/feedback";
+}, 2000);
+
+You can run the below command in chrome console, you will get the data. Ask in stackoverflow how this can be avoided. 
+firebase.database().ref().child('stash');
+
+Should eventually find out how to do server-side authentication
+You have to do this in your server side application and send the generated token to your client app. The token should be sent over HTTPS as well. Default token expiry is 24 hours. This can be changed.
+https://stackoverflow.com/questions/46752177/can-i-hide-javascript-code-with-firebase-cloud-functions
+https://github.com/mdrepo/firebase-functions
+https://stackoverflow.com/questions/47867638/expressjs-and-firebase-auth-beginner-queries
+
+
+30/May/2018 - Check FB-Authentication1 for server-side token authentication
+1. After giving a thought. Server Side authentication via token as used in this project, i am not going to use because
+   its used as a middleware, so every call will have to arrange header token stuff. Not worth the effort. 
+2. Going to follow simple approach. 
+    1. Login - Simple authentication   
+    2. onAuthStateChanged in all pages
+    3. EJS to generate page for the user. 
+    4. Adding/Updating data via callable (or) regular firebase update.
+------------------------------------------------------------------------------------------
+Firebase Functions Sample
+Taken from sample : Firebase - Functions - An introduction to Firebase functions.mp4
+
+exports.onNewCake = functions.database.ref('/cakes/{cakeId}').onCreate(event => {
+	const newCakeId = event.params.cakeId; //Gets the key 
+	if(!event.data.val()){
+	  return;
+	}
+
+	const newCake = event.data.val(); //Get the cake object
+
+	const cakeReference = admin.database().ref('/cakes/'+newCakeId); //Get a reference to our new cake id
+
+	const today = new Date();
+
+	let sellBy = new Date().setDate(today.getDate()+3);
+	let useBy = new Date().setDate(today.getDate()+4);
+
+	cakeReference.update({sellByDate:new Date(sellBy).toUTCString(), useByDate:new Date(useBy).toUTCString()});
+});
+
+firebase deploy --only functions:onNewCake
+
+------------------------------------------------------------------------------------------
+How to use middleware from different file
+https://github.com/firebase/functions-samples/blob/master/template-handlebars/functions/index.js
+https://github.com/firebase/functions-samples/blob/master/template-handlebars/functions/firebaseUser.js
+------------------------------------------------------------------------------------------
+
+Removed below routes from Feedback Management System - Copied the files archive
+app.get('/feedback/:fid', (request, response) => {
+    var fid = request.params.fid;
+    var pgTitle = 'Feedback - '+fid;
+    response.render('showFeedback.ejs', {
+        pageTitle: pgTitle,
+        pageID: 'feedbackShow',
+        categoryName: fid,
+        pageName: 'Feedback > '+fid
+    });    
+});
+ 
+app.get('/outlook', (request, response) => {
+    response.render('outlook.ejs', {
+        pageTitle:'Feedback - Outlook',
+        pageID: 'feedbackOutlook',
+        pageName: 'Outlook'
+    });    
+});
+ 
+------------------------------------------------------------------------------------------

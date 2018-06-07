@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- https://mdbootstrap.com/previews/templates/admin-dashboard/html/dashboards/v-1.html -->
+
+<head>
+    <% include partials/template/head.ejs %>
+
+    <!-- Your custom styles (optional) -->
+    <style>
+
+
+    </style>
+</head>
+
+<body id="<%= pageID %>" class="fixed-sn white-skin" style="display:none">
+
+    <!--Main Navigation-->
+    <header>
+        <% include partials/template/navs.ejs %>
+    </header>
+    <!--Main Navigation-->
+
+    <!--Main layout-->
+    <main>
+        <div class="container-fluid">
+
+            <!--Section: Using TABS-->
+            <section class="mb-3">
+                    <div class="row">
+                        <h1 class="mt-1 text-center" id="title2">User Categories</h1>                        
+                    </div>
+                        
+                    <div class="row">
+                        <div class="col-md-12 mb-1">
+                            <!-- Tabs -->
+                            <!-- Nav tabs -->
+                            <div class="tabs-wrapper">
+                                <ul class="nav classic-tabs tabs-primary primary-color" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link waves-light waves-effect waves-light active show" data-toggle="tab" href="#allCategories" role="tab" aria-selected="false">All Categories</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link waves-light waves-effect waves-light" data-toggle="tab" href="#addNewCategory" role="tab" aria-selected="true">Add new category</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- Tab panels -->
+                            <div class="tab-content card">
+                                <!--Panel 1-->
+                                <div class="tab-pane fade active show" id="allCategories" role="tabpanel">
+                                    <div class="table-responsive">
+                                        <table class="table large-header">
+                                                <thead>
+                                                    <tr>
+                                                            <th class="font-weight-bold dark-grey-text">Name </th>
+                                                            <th class="font-weight-bold dark-grey-text">Counts </th>
+                                                            <th class="font-weight-bold dark-grey-text">Action</th>
+                                                    </tr>                                        
+                                                </thead>
+                                                <tbody id="catTableBody" class="ACallApps-placeholder">                                                                                            
+                                                <tbody class = "userCategories-placeholder">
+                                                </tbody>
+                                        </table>                
+                                    </div>
+                                </div>
+                                <!--/.Panel 1-->
+
+                                <!--Panel 2-->
+                                <div class="tab-pane fade" id="addNewCategory" role="tabpanel">                                
+                                        <form>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class="md-form">
+                                                            <input type="text" id="newCat-name" class="form-control">
+                                                            <label for="newApp-sname">Name</label>
+                                                        </div>
+                                                    </div>                                                
+                                                </div>
+                    
+                                                <div class="text-center mt-3">
+                                                    <span id="txtStatus" class="h5 text-center red-text" style="display:none"></span>    
+                                                </div>    
+                                                                
+                                                <div class="text-center mt-4">
+                                                    <button type = "button" id="btnAdd" class="btn btn-deep-orange waves-effect waves-light">Add</button>
+                                                </div>            
+                                        </form>
+                                </div>
+                                <!--/.Panel 2-->
+                            </div>
+                            <!-- /.Tabs -->
+                        </div>
+                    </div>
+            </section>
+            <!--Section: Using TABS-->
+    
+            <div style="height: 50px"></div>
+
+        </div>
+    </main>
+    <!--Main layout-->
+
+    <!--Footer-->
+    <% include partials/template/footer.ejs %>
+
+    <!-- Custom Javascripts -->
+    <script type="text/javascript" src="../js/fbs-common.js"></script>
+    <script defer type="text/javascript" src="../js/newCat.js"></script>
+    
+</body>
+
+</html>

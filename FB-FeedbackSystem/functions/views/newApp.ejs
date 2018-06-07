@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- https://mdbootstrap.com/previews/templates/admin-dashboard/html/dashboards/v-1.html -->
+
+<head>
+    <% include partials/template/head.ejs %>
+
+    <!-- Your custom styles (optional) -->
+    <style>
+
+
+    </style>
+</head>
+
+<body id="<%= pageID %>" class="fixed-sn white-skin" style="display:none">
+
+    <!--Main Navigation-->
+    <header>
+        <% include partials/template/navs.ejs %>
+    </header>
+    <!--Main Navigation-->
+
+    <!--Main layout-->
+    <main>
+        <div class="container-fluid">
+
+            <!--Section: Using TABS-->
+            <section class="mb-3">
+                <div class="row">
+                    <h1 class="mt-1 text-center" id="title2">Application Central</h1>                        
+                </div>
+                    
+                <div class="row">
+                    <div class="col-md-12 mb-1">
+                        <!-- Tabs -->
+                        <!-- Nav tabs -->
+                        <div class="tabs-wrapper">
+                            <ul class="nav classic-tabs tabs-primary primary-color" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link waves-light waves-effect waves-light active show" data-toggle="tab" href="#allApplications" role="tab" aria-selected="false">All Applications</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link waves-light waves-effect waves-light" data-toggle="tab" href="#addNewApplication" role="tab" aria-selected="true">Add new application</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- Tab panels -->
+                        <div class="tab-content card">
+                            <!--Panel 1-->
+                            <div class="tab-pane fade active show" id="allApplications" role="tabpanel">
+                                <div class="table-responsive">
+                                    <table class="table large-header" id="appTable">
+                                        <thead>
+                                            <tr>
+                                                <th class="font-weight-bold dark-grey-text">Short name </th>
+                                                <th class="font-weight-bold dark-grey-text">Create date</th>
+                                                <th class="font-weight-bold dark-grey-text">Description</th>
+                                                <th class="font-weight-bold dark-grey-text">Long name</th>
+                                                <th class="font-weight-bold dark-grey-text">Actions</th>
+                                            </tr>                                        
+                                        </thead>                                            
+                                        <tbody id="appTableBody" class="ACallApps-placeholder">
+                                                                
+                                        </tbody>
+                                    </table>                
+                                </div>
+                            </div>
+                            <!--/.Panel 1-->
+                            <!--Panel 2-->
+                            <div class="tab-pane fade" id="addNewApplication" role="tabpanel">                                
+                                <form>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="md-form">                                                
+                                                <input type="text" id="newApp-sname" class="form-control input-char-counter" length="8" maxlength="8">
+                                                <label for="newApp-fname">Short name</label>
+                                            </div>
+                                        </div>
+    
+                                        <div class="col">
+                                            <div class="md-form">
+                                                <input type="text" id="newApp-lname" class="form-control">
+                                                <label for="newApp-sname">Long name</label>
+                                            </div>
+                                        </div>                                                
+                                    </div>
+    
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="md-form">
+                                                <textarea type="text" id="newApp-description" class="md-textarea form-control" rows="2"></textarea>
+                                                <label for="newApp-description" class="">Description</label>
+                                            </div>              
+                                        </div>                              
+                                    </div>
+                        
+                                    <div class="text-center mt-3">
+                                            <span id="txtStatus" class="h5 text-center red-text" style="display:none"></span>    
+                                    </div>
+                                                                        
+                                    <div class="text-center mt-4">
+                                        <button type = "button" id="btnAdd" class="btn btn-deep-orange waves-effect waves-light">Add</button>
+                                    </div>            
+                                </form>                                
+                            </div>
+                            <!--/.Panel 2-->
+                        </div>
+                        <!-- /.Tabs -->
+                    </div>
+                </div>
+            </section>
+            <!--Section: Using TABS-->
+            
+            <div style="height: 5px"></div>
+
+        </div>
+    </main>
+    <!--Main layout-->
+
+    <!--Footer-->
+    <% include partials/template/footer.ejs %>
+
+    <!-- Custom Javascripts -->
+    <script type="text/javascript" src="../js/fbs-common.js"></script>
+    <script defer type="text/javascript" src="../js/newApp.js"></script>
+        
+</body>
+
+</html>

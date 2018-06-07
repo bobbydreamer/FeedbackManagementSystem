@@ -1,0 +1,65 @@
+        <!-- Sidebar navigation -->
+        <div id="slide-out" class="side-nav sn-bg-4 fixed">
+                <ul class="custom-scrollbar">
+                <!-- Logo -->
+                <li class="logo-sn waves-effect">
+                    <div class="text-center">
+                        <a href="/feedback" class="pl-0"><img src="../images/feedbacks-transparent.png" height="50" width="200"></a>
+                    </div>
+                </li>
+                <!--/. Logo -->
+    
+                <!--Search Form-->
+                <li>&nbsp;</li>
+                <li>&nbsp;</li>
+                <!--/.Search Form-->
+                <!-- Side navigation links -->
+                <li>
+                    <ul class="collapsible collapsible-accordion">
+                        <li><a href="/newApp" class="collapsible-header waves-effect"><i class="fa fa-cubes"></i> Applications</a></li>
+                        <li><a href="/newCat" class="collapsible-header waves-effect"><i class="fa fa-tachometer"></i> Categories</a></li>
+                                
+                        <!-- Simple link -->
+                        <li>&nbsp;</li>
+                        <div class="sidebar-placeholder"></div>
+
+                        <li>&nbsp;</li>
+                        <li><a href="/archive" class="collapsible-header waves-effect"><i class="fa fa-th-large"></i> Archive</a></li>
+                        <li><a href="/testfeed" class="collapsible-header waves-effect"><i class="fa fa-th-large"></i> Test feedbacks</a></li>
+                        
+                    </ul>
+                </li>
+                <!--/. Side navigation links -->
+                </ul>
+                <div class="sidenav-bg mask-strong"></div>
+            </div>
+            <!--/. Sidebar navigation -->
+    
+            <!-- Navbar -->
+            <nav class="navbar fixed-top navbar-expand-lg scrolling-navbar double-nav">
+                <!-- SideNav slide-out button -->
+                <div class="float-left">
+                    <a href="#" data-activates="slide-out" class="button-collapse black-text"><i class="fa fa-bars white-text"></i></a>
+                </div>
+                <!-- Breadcrumb-->
+                <div class="breadcrumb-dn mr-auto">
+                    <p id="application-name">
+                        <%= pageName %>
+                    </p>
+                    <span id="test"></span>
+                </div>
+    
+                <!--Navbar links-->
+                <ul class="nav navbar-nav nav-flex-icons ml-auto">
+    
+                    <!-- Dropdown -->
+                    <li class="nav-item">
+                        <a href="/profile" class="nav-link waves-effect"><i class="fa fa-user"></i> <span class="clearfix d-none d-sm-inline-block" id="userProfile"></span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link waves-effect"><i class="fa fa-power-off"></i> <span class="clearfix d-none d-sm-inline-block" id="aSignout">Logout</span></a>
+                    </li>
+                </ul>
+                <!--/Navbar links-->
+            </nav>
+            <!-- /.Navbar -->    

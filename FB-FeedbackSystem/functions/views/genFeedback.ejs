@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- https://mdbootstrap.com/previews/templates/admin-dashboard/html/dashboards/v-1.html -->
+
+<head>
+    <% include partials/template/head.ejs %>
+
+    <!-- Your custom styles (optional) -->
+    <style>
+
+
+    </style>
+</head>
+
+<body id="<%= pageID %>" class="fixed-sn white-skin" style="display:none">
+
+    <!--Main Navigation-->
+    <header>
+        <% include partials/template/navs.ejs %>
+    </header>
+    <!--Main Navigation-->
+
+    <!--Main layout-->
+    <main>
+        <div class="container-fluid">
+
+            <div class="card">
+
+                <!-- Card body -->
+                <div class="card-body">
+    
+                    <!-- Material form register -->
+                    <form>
+                        <p class="h4 text-center py-4">Test Feedback</p>
+    
+                        <!-- Material input text -->
+                        <div class="md-form">
+                            <i class="fa fa-envelope prefix grey-text"></i>
+                            <input type="text" id="txtSubject" class="form-control">
+                            <label for="materialFormCardNameEx" class="font-weight-light">Subject</label>
+                        </div>
+        
+                        <br>
+                        <!-- Grid row -->
+                        <div class="form-row">
+                            <!-- Grid column -->
+                            <div class="col">
+                                <!-- Default input -->
+                                <input type="text" id="txtName" class="form-control" placeholder="Name">
+                            </div>
+                            <!-- Grid column -->
+
+                            <!-- Grid column -->
+                            <div class="col">
+                                <!-- Default input -->
+                                <input type="text" id="txtEmail" class="form-control" placeholder="Email">
+                            </div>
+                            <!-- Grid column -->
+                        </div>
+                        <!-- Grid row -->
+                    </form>
+    
+            <br>
+                <!-- Application name -->
+                <input type="text" class="form-control" placeholder="Choose application" id="txtApps" list="ddList">
+                    <datalist id="ddList">
+                    </datalist>
+                                                  
+                <!-- Application name - Ends -->
+        
+                    <!-- Material textarea message -->
+                    <div class="md-form form-sm">
+                        <i class="fa fa-pencil prefix"></i>
+                        <textarea type="text" id="taMessage" class="md-textarea form-control"></textarea>
+                        <label for="taMessage">Feedback</label>
+                    </div>
+
+                    <center><label class="red-text" id="txtStatus" style="display:none"></label></center>
+
+                    <div class="text-center py-4">
+                        <button id="btnFeedback" class="btn btn-cyan waves-effect waves-light" type="submit">Send Feedback</button>
+                    </div>
+                    
+                    <!-- Material form register -->
+    
+                </div>
+                <!-- Card body -->
+    
+            </div>
+    
+            <div style="height: 50px"></div>
+
+        </div>
+    </main>
+    <!--Main layout-->
+
+    <!--Footer-->
+    <% include partials/template/footer.ejs %>
+
+    <!-- Custom Javascripts -->
+    <script type="text/javascript" src="../js/fbs-common.js"></script>    
+    <script defer type="text/javascript" src="../js/genFeedback.js"></script>
+    
+</body>
+
+</html>
