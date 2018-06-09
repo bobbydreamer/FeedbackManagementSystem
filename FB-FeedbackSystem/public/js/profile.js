@@ -15,20 +15,42 @@ document.addEventListener('DOMContentLoaded', event => {
     const trPassword = document.getElementById('trPassword');
     const lblLastLogin = document.getElementById('lblLastLogin');
 
-
+    var user;
+    
     function getDatetime(uid){
             var dtRef = firebase.database().ref().child('/FB_Users/' + uid);
             dtRef.on('value', function(snap) {
                 // console.log(snap.val());
                     lblLastLogin.innerHTML = snap.val();
             });            
-
     }  
-    
+
+    function updateUserProfile(){
+        var user = firebase.auth().currentUser;
+        var name, email, photoUrl, uid, emailVerified;
+        
+        if (user != null) {
+          name = user.displayName;
+          email = user.email;
+          uid = user.uid;  
+        //   console.log(name, ' ',email, ' ',uid ,' ', user.providerData[0].providerId);
+        //   console.log('User = ',user);
+
+          var updates = {}, temp = {};
+          temp['username'] = name;
+          temp['email'] = email;
+          temp['provider'] = user.providerData[0].providerId;
+          updates['/FB_Users/details/'+ uid ] = null;
+          updates['/FB_Users/details/'+ uid ] = temp;
+          updates['/FB_Users/user/'+ uid ] = null;
+          updates['/FB_Users/user/'+ uid ] = 'updated';
+          firebase.database().ref().update(updates);                          
+        }        
+
+    }
 
     firebase.auth().onAuthStateChanged(firebaseUser => {
         if(firebaseUser){
-
             getDatetime(firebaseUser.uid);
             user = firebaseUser;
             //document.getElementById('lblMessage').innerHTML = 'Hello '+firebaseUser.displayName+' - '+firebaseUser.email+' - '+firebaseUser.photoURL+' - '+firebaseUser.emailVerified+' - '+firebaseUser.uid;
@@ -60,11 +82,11 @@ document.addEventListener('DOMContentLoaded', event => {
 
     btnNameUpd.addEventListener('click', e => {
         //txtStatus.innerHTML
-
         user.updateProfile({
             displayName: NName.value
           }).then(function() {
             txtStatus.innerHTML = "Profile name updated";
+            updateUserProfile();
           }).catch(function(error) {
             txtStatus.innerHTML = "Error : Profile name not updated. Error = "+error;
           });
@@ -72,9 +94,9 @@ document.addEventListener('DOMContentLoaded', event => {
     });
 
     btnEmailUpd.addEventListener('click', e => {
-
         user.updateEmail(NEmail.value).then(function() {
             txtStatus.innerHTML = "Email updated to "+NEmail.value;
+            updateUserProfile();
           }).catch(function(error) {
             txtStatus.innerHTML = "Error : Email not updated. Error = "+error;
           });
@@ -90,7 +112,6 @@ document.addEventListener('DOMContentLoaded', event => {
     });    
 
     btnPasswordUpd.addEventListener('click', e => {
-
         user.updatePassword(NPassword.value).then(function() {
             txtStatus.innerHTML = "Password update successful";
           }).catch(function(error) {

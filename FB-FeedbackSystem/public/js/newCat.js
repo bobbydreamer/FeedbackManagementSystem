@@ -89,6 +89,7 @@ btnAdd.addEventListener('click', e => {
         var allCats = {}, catNames =[];
         let temp = {};
         appRef.on('value', function(snap) {
+            if(snap.val() == null) return 0;
             allCats = {};
             catNames = [];
             allCats = snap.val();

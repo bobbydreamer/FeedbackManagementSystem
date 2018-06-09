@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- https://mdbootstrap.com/previews/templates/admin-dashboard/html/dashboards/v-1.html -->
+
+<head>
+    <% include partials/template/head.ejs %>
+
+    <!-- Your custom styles (optional) -->
+    <style>
+
+
+    </style>
+</head>
+
+<body id="<%= pageID %>" class="fixed-sn white-skin" style="display:none">
+
+    <!--Main Navigation-->
+    <header>
+        <% include partials/template/navs.ejs %>
+    </header>
+    <!--Main Navigation-->
+
+    <!--Main layout-->
+    <main>
+        <div class="container-fluid">
+
+            <!--Section: Using TABS-->
+            <section class="mb-3">
+                <div class="row">
+                    <h1 class="mt-1 text-center" id="title2">User Management</h1>                        
+                </div>
+                    
+                <div class="row">
+                    <div class="col-md-12 mb-1">
+                        <!-- Tabs -->
+                        <!-- Nav tabs -->
+                        <div class="tabs-wrapper">
+                            <ul class="nav classic-tabs tabs-primary primary-color" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link waves-light waves-effect waves-light active show" data-toggle="tab" href="#allApplications" role="tab" aria-selected="false">Authorized users</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link waves-light waves-effect waves-light" data-toggle="tab" href="#addNewApplication" role="tab" aria-selected="true">Add new user</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- Tab panels -->
+                        <div class="tab-content card">
+                            <!--Panel 1-->
+                            <div class="tab-pane fade active show" id="allApplications" role="tabpanel">
+                                <div class="table-responsive">
+                                    <table class="table large-header" id="appTable">
+                                        <thead>
+                                            <tr>
+                                                <th class="font-weight-bold dark-grey-text">Username</th>
+                                                <th class="font-weight-bold dark-grey-text">Email</th>
+                                                <th class="font-weight-bold dark-grey-text">UID</th>
+                                                <th class="font-weight-bold dark-grey-text">Last login</th>
+                                                <th class="font-weight-bold dark-grey-text">Actions</th>
+                                            </tr>                                        
+                                        </thead>                                            
+                                        <tbody id="appTableBody" class="allUsers-placeholder">
+                                                                
+                                        </tbody>
+                                    </table>                
+                                </div>
+                            </div>
+                            <!--/.Panel 1-->
+                            <!--Panel 2-->
+                            <div class="tab-pane fade" id="addNewApplication" role="tabpanel">                                
+                                <form>
+                                    <div class="row">
+                                        <div class="col" style="    border-right: 1px solid #6c757d;">
+                                            <div class="ml-2 mr-2 mb-2 row">
+                                                    <input id="txtUsername" class="form-control" type="text" placeholder="Username">
+                                            </div>                                                
+                                            <div class="ml-2 mr-2 mb-2 row">
+                                                    <input id="txtEmail" class="form-control" type="text" placeholder="Email">
+                                            </div>
+                                            <div class="ml-2 mr-2 mb-2 row">
+                                                    <input id="txtPass" class="form-control" type="text" placeholder="Password">
+                                            </div>
+
+                                            <div class="row justify-content-center mt-3">
+                                                <span id="txtStatus" class="h5 red-text"></span>    
+                                            </div>
+                                                        
+                                            <div class="row justify-content-center">
+                                                    <button id="btnRegister" type="button" class="btn btn-elegant">Register</button>
+                                            </div>                                            
+                                        </div>
+                                        <div class="col-6 align-self-center">
+                                                <div class="row justify-content-center">
+                                                    <button id="btnGoogle" type="button" class="btn btn-danger">Sign-in with google</button>
+                                                </div>                                            
+                                        </div>
+                                    </div>                                                                                
+
+                                </form>                                
+                            </div>
+                            <!--/.Panel 2-->
+                        </div>
+                        <!-- /.Tabs -->
+                    </div>
+                </div>
+            </section>
+            <!--Section: Using TABS-->
+            
+            <div style="height: 5px"></div>
+
+        </div>
+    </main>
+    <!--Main layout-->
+
+    <!--Footer-->
+    <% include partials/template/footer.ejs %>
+
+    <!-- Custom Javascripts -->
+    <script type="text/javascript" src="../js/fbs-common.js"></script>
+    <script defer type="text/javascript" src="../js/addUser.js"></script>
+        
+</body>
+
+</html>

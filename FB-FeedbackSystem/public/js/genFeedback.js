@@ -9,21 +9,22 @@ document.addEventListener('DOMContentLoaded', event => {
     const taMessage = document.getElementById('taMessage');
     const txtStatus = document.getElementById('txtStatus');    
     const btnFeedback = document.getElementById('btnFeedback');
+    const btnFeedbackFun = document.getElementById('btnFeedbackFun');
 
     function validateForm() {
         return new Promise( (resolve, reject) => {            
             var errMsg;
-            console.log('OK');
+
             if (txtSubject.value == "") {
                 errMsg = "no text in subject textbox";
                 reject('Missing value : '+errMsg);
             }
-            console.log('OK');
+
             if (txtName.value == "") {
                 errMsg = "no text in Name textbox";
                 reject('Missing value : '+errMsg);
             }
-            console.log('OK');
+
             if (txtEmail.value == "") {
                 errMsg = "no text in Email textbox";
                 reject('Missing value : '+errMsg);
@@ -33,16 +34,40 @@ document.addEventListener('DOMContentLoaded', event => {
                 errMsg = "no Application selected in the Drop-down list";
                 reject('Missing value : '+errMsg);
             }
-            console.log('OK');            
+
             if (taMessage.value == "") {
                 errMsg = "no text in Message textbox";
                 reject('Missing value : '+errMsg+" = "+taMessage);
             }
-            console.log('AllOK');
-            resolve('OK');   
+            // console.log('AllOK');
+            resolve(prepareData());   
         });
     }
-    
+
+    function prepareData(){
+        const auth = firebase.auth();
+        const uid = auth.currentUser.uid; //var userId = firebase.auth().currentUser.uid;
+                
+        let subject = txtSubject.value;
+        let name = txtName.value;
+        let email = txtEmail.value;
+        
+        let appName = $('#txtApps').val();
+        //let application =   $('#ddList option[value="' + $('#txtApps').val() + '"]').data('id');
+        let application = $('#ddList').find('option[value="' +appName + '"]').attr('id');            
+
+        let message = taMessage.value.replace(/\n/g, "<BR />");        
+        let status = 'active', category='none';
+        let dateSaved = Date.now();
+
+        // console.log('Date(ddmmyyyy) : ', getCurrentDate(dateSaved));
+        // console.log('Content = ',subject, name, email, application, message, dateSaved, status, category);
+        
+        var addDocuments = { subject, name, email, application, message, dateSaved, status, category };
+
+        return addDocuments;
+    }
+
     function unixts2stdts(unixts){
         var timestamp = unixts;
        date = new Date(timestamp),
@@ -78,35 +103,17 @@ document.addEventListener('DOMContentLoaded', event => {
         return str;
     }
 
-
     btnFeedback.addEventListener('click', e => {
         validateForm().then( (resolved) => {
-            //console.log('validate form = ',resolved);
-            const auth = firebase.auth();
-            const uid = auth.currentUser.uid; //var userId = firebase.auth().currentUser.uid;
-                    
-            let subject = txtSubject.value;
-            let name = txtName.value;
-            let email = txtEmail.value;
-            
-            let appName = $('#txtApps').val();
-            //let application =   $('#ddList option[value="' + $('#txtApps').val() + '"]').data('id');
-            let application = $('#ddList').find('option[value="' +appName + '"]').attr('id');            
-
-            let message = taMessage.value.replace(/\n/g, "<BR />");        
-            let status = 'active', category='none';
-            let dateSaved = Date.now();
-            let yearweek = getYearWeek(dateSaved);
-
-            console.log(subject, name, email, application, message, dateSaved, getYearWeek(dateSaved), getCurrentDate(dateSaved), category);
-
-            var addDocuments = { subject, name, email, application, message, dateSaved, status, category };
-            //var topicsInfo = { topic, dateSaved };
+            // console.log('validate form = ',resolved);
+            let application = resolved.application;
+            let yearweek = getYearWeek(resolved.dateSaved);
+            let addDocuments = resolved;
                     
             // Get a key for a new Post.
-            var fbDailyRef = firebase.database().ref().child('FB_Daily');
-            var fbMessagesRef = firebase.database().ref().child('FB_Messages');
-            var fbAppCountsRef = firebase.database().ref().child('FB_AppCounts');
+            let fbDailyRef = firebase.database().ref().child('FB_Daily');
+            let fbMessagesRef = firebase.database().ref().child('FB_Messages');
+            let fbAppCountsRef = firebase.database().ref().child('FB_AppCounts');
             //var catRef = firebase.database().ref().child('categories');
 
             var key = fbDailyRef.push().key;
@@ -117,8 +124,8 @@ document.addEventListener('DOMContentLoaded', event => {
             updates['/FB_Messages/' + application +'/' + key] = addDocuments; 
             firebase.database().ref().update(updates);
 
-            fbDailyRef.child('DateCounts/' + yearweek + '/').transaction(function (i) { return i+1; });
-            fbDailyRef.child('TotalCount/').transaction(function (i) { return i+1; });
+            fbDailyRef.child('/DateCounts/' + yearweek + '/').transaction(function (i) { return i+1; });
+            fbDailyRef.child('/TotalCount/').transaction(function (i) { return i+1; });
             
             //Weekly & TotalCounts
             fbMessagesRef.child('/' + application + '/TotalCount/').transaction(function (i) { 
@@ -133,6 +140,53 @@ document.addEventListener('DOMContentLoaded', event => {
             // fbAppCountsRef.child('/FB_AppCounts/' + application + '/WeekCounts/' + yearweek + '/').transaction(function (i) { return i+1; });
             // fbAppCountsRef.child('/FB_AppCounts/' + application + '/TotalCount/').transaction(function (i) { return i+1; });
             
+        }).catch( (error) => {
+            txtStatus.style.display = 'inline';
+            txtStatus.innerHTML= error;
+            setTimeout( () => {
+                txtStatus.style.display = 'none';
+            }, 60000);            
+        });
+            
+    });
+
+    btnFeedbackFun.addEventListener('click', e => {
+        validateForm().then( (resolved) => {
+            // console.log('validate form feedback() = ',resolved);
+            let application = resolved.application;
+            let yearweek = getYearWeek(resolved.dateSaved);
+            let addDocument = resolved;
+            let data = {
+                feedback:addDocument,
+                yearweek,
+                application
+            };
+
+            // console.log('Before writeFeedback() - ',data);
+            var writeFeedback = firebase.functions().httpsCallable('writeFeedback');
+            writeFeedback(data).then( (result) => {
+                // console.log('Result : ',result);
+                if(result.data.status){
+                    txtStatus.style.display = 'inline';
+                    txtStatus.innerHTML= 'Thanks for your feedback';                
+                }else{
+                    txtStatus.style.display = 'inline';
+                    txtStatus.innerHTML= 'Sorry! Not able to send your feedback';
+                }
+                
+            }).catch( (error) => { 
+                var code = error.code;
+                var message = error.message;
+                var details = error.details;
+                if(code != undefined){
+                    let temp = 'Sorry! Not able to send your feedback. CODE:'+code+' MESSAGE:'+message+' DETAILS:'+details;
+                    txtStatus.style.display='inline';
+                    txtStatus.innerHTML= temp;
+                    console.log(temp);    
+                }                                                
+            });
+                
+
         }).catch( (error) => {
             txtStatus.style.display = 'inline';
             txtStatus.innerHTML= error;

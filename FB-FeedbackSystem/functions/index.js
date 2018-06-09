@@ -25,52 +25,6 @@ app.get('/', (request, response) => {
     });    
 });
 
-/*
-function getApps(){
-    return new Promise( (resolve, reject) => {
-        var appRef = firebase.database().ref().child('ApplicationList');
-        var appList = {}, appNames = {};
-        appRef.on('value', function(snap) {
-            appList = snap.val();
-            console.log('appList', appList);
-            let keys = Object.keys(appList);
-            for(let i=0;i<keys.length;i++){
-                appNames[keys[i]] = appList[keys[i]].longName;
-            }
-            console.log('Keys = ',keys);
-            console.log('appNames = ',appNames);
-            resolve(appNames);
-        });            
-
-    });
-}
-*/
-
-// app.get('/feedback', (request, response) => {
-//     var appRef = firebase.database().ref().child('ApplicationList');
-//     var appList = {}, appNames = {};
-//     appRef.on('value', function(snap) {
-//         appList = appNames = {};
-//         appList = snap.val();
-//         console.log('appList', appList);
-//         let keys = Object.keys(appList);
-//         for(let i=0;i<keys.length;i++){
-//             appNames[keys[i]] = appList[keys[i]].longName;
-//         }
-//         console.log('Keys = ',keys);
-//         console.log('appNames = ',appNames);
-
-//         response.render('feedback.ejs', {
-//             pageTitle:'Feedback - Home',
-//             pageID: 'feedbackhome',
-//             pageName: 'Home',
-//             appNames
-//         });        
-
-//     });            
-// });
-
-
 app.get('/feedback', (request, response) => {
     // getApps().then(appNames => {
     //     console.log('/feedback = ',appNames);
@@ -108,17 +62,6 @@ app.get('/app/:appName', (request, response) => {
         applicationName: appName,
         pageName: 'Application >> '+appName
     });    
-
-    // getApps().then(appNames => {        
-    //     response.render('appFeedbacks.ejs', {
-    //         pageTitle: pgTitle,
-    //         pageID: 'feedbackappFeedbacks',
-    //         applicationName: appName,
-    //         pageName: 'Application > '+appName,
-    //         appNames
-    //     });        
-    // });
-    
 });
 
 app.get('/category/:catName', (request, response) => {
@@ -155,77 +98,18 @@ app.get('/profile', (request, response) => {
         pageName: 'Profile'
     });    
 });
-/*
+
+app.get('/users', (request, response) => {
+    response.render('addUsers.ejs', {
+        pageTitle:'Feedback - Users',
+        pageID: 'feedbackUsers',
+        pageName: 'Users'
+    });    
+});
+
 // Firebase Functions()
 // Check Authorization
-exports.checkAuthorization = functions.https.onCall((data, context) => {
-    // Checking that the user is authenticated.
-    if (!context.auth) {
-      // Throwing an HttpsError so that the client gets the error details.
-      throw new functions.https.HttpsError('failed-precondition', 'The function must be called ' +
-          'while authenticated.');
-    }
-    
-    // Message text passed from the client.
-    const text = data.text;
-    // Authentication / user information is automatically added to the request.
-    const uid = context.auth.uid;
-    const loginLog = {"uid":uid, timestamp:firebase.database.ServerValue.TIMESTAMP};
-    
-    console.log('Text:',text, ' UID:',uid);
 
-    // Saving the new message to the Realtime Database.
-    //const sanitizedMessage = sanitizer.sanitizeText(text); // Sanitize the message.
-    return firebase.database().ref('/FB_Logins/').push(loginLog).then(() => {
-      // Returning the sanitized message to the client.      
-      return { Text: ' Success' };
-    })
-    
-    
-    });
-*/
-
-/*
-exports.checkAuthorization = functions.https.onCall((data, context) => {
-    // Checking that the user is authenticated.
-    if (!context.auth) {
-        // Throwing an HttpsError so that the client gets the error details.
-        throw new functions.https.HttpsError('failed-precondition', 'The function must be called ' +
-            'while authenticated.');
-      }
-      
-      // Message text passed from the client.
-      const text = data.text;
-      // Authentication / user information is automatically added to the request.
-      const uid = context.auth.uid;
-      const loginLog = {"uid":uid, "timestamp":firebase.database.ServerValue.TIMESTAMP};
-      
-    var pushKey = firebase.database().ref().child('FB_Logins').push().key;
-    var updates = {};
-    let FB_UsersRef = firebase.database().ref().child('/FB_Users/'+ uid);
-    let getUser = FB_UsersRef.once('value').then(function(snap) {
-        // console.log('Snap = ',snap.val());
-        if(snap.val()!=null){
-            updates['/FB_Logins/'+ pushKey] = loginLog;
-            firebase.database().ref().update(updates);          
-        }
-        return snap.val() != null;
-    });
-    
-    return Promise.all([getUser]).then(function(results) {
-        console.log('in Promise');
-        if(results[0] == true){
-            // console.log("IN");
-            return {Text:'OK'};
-        }                    
-        else
-            return {Text:'Unauthorized to use application'};
-    });
-    
-
-});
-*/
-/*
 exports.checkAuthorization = functions.https.onCall((data, context) => {
     // Checking that the user is authenticated.
     if (!context.auth) {
@@ -236,15 +120,16 @@ exports.checkAuthorization = functions.https.onCall((data, context) => {
       // Authentication / user information is automatically added to the request.
       const uid = context.auth.uid;
       const lastSignInTime = data.lastSignInTime;
-      console.log('lastSignInTime = ',lastSignInTime);
+    //   console.log('lastSignInTime = ',lastSignInTime);
       let updates = {};
     //   const loginLog = {"uid":uid, "timestamp":firebase.database.ServerValue.TIMESTAMP};
 
-      let FB_UsersRef = firebase.database().ref().child('/FB_Users/'+ uid);
+      let FB_UsersRef = firebase.database().ref().child('/FB_Users/user/'+ uid);
       let getUser = FB_UsersRef.once('value').then(function(snap) {
           // console.log('Snap = ',snap.val());
           if(snap.val()!=null){
-              updates['/FB_Users/'+ uid] = lastSignInTime;
+              updates['/FB_Users/user/'+ uid] = lastSignInTime;
+              updates['/FB_Users/details/'+ uid +'/lastlogin/'] = lastSignInTime;
               firebase.database().ref().update(updates);          
           }
           return snap.val() != null;
@@ -263,7 +148,54 @@ exports.checkAuthorization = functions.https.onCall((data, context) => {
     });
 });
 
-*/
+exports.writeFeedback = functions.https.onCall((data, context) => {
+    // Checking that the user is authenticated.
+    if (!context.auth) {
+        // Throwing an HttpsError so that the client gets the error details.
+        throw new functions.https.HttpsError('failed-precondition', 'User not authorized to usee the application');
+    }
+      
+    // Authentication / user information is automatically added to the request.
+    const uid = context.auth.uid;
+
+    const feedback = data.feedback;
+    const yearweek = data.yearweek;
+    const application = data.application;
+    
+    // console.log('UID:',uid,' Yearweek:',yearweek,' Application:',application,' Feedback:',feedback);
+    let updates = {};
+    
+    let fbDailyRef = firebase.database().ref().child('FB_Daily');
+    let fbMessagesRef = firebase.database().ref().child('FB_Messages');
+    let fbAppCountsRef = firebase.database().ref().child('FB_AppCounts');
+
+    // Get a key for a new Post.
+    let key = fbDailyRef.push().key;
+
+    // Write the new post's data simultaneously in the posts list and the user's post list.
+    updates['/FB_Daily/messages/' + key] = feedback;
+    updates['/FB_Messages/' + application +'/' + key] = feedback; 
+    let prom1 = firebase.database().ref().update(updates);
+
+    let prom2 = fbDailyRef.child('/DateCounts/' + yearweek + '/').transaction(function (i) { return i+1; });
+    let prom3 = fbDailyRef.child('/TotalCount/').transaction(function (i) { return i+1; });
+    
+    //Weekly & TotalCounts
+    let prom4 = fbMessagesRef.child('/' + application + '/TotalCount/').transaction(function (i) { 
+        firebase.database().ref('/FB_AppCounts/' + application + '/TotalCount/').set(i+1);
+        return i+1; 
+    });
+    let prom5 = fbMessagesRef.child('/' + application + '/DateCounts/' + yearweek + '/').transaction(function (i) { 
+        firebase.database().ref('/FB_AppCounts/' + application + '/WeeklyCount/').set(i+1);                                
+        return i+1; 
+    });
+
+    return Promise.all([prom1, prom2, prom3, prom4, prom5]).then(function(results) {
+        return {status:'OK'}
+    });    
+
+});
+
 // Create and Deploy Your First Cloud Functions
 // https://firebase.google.com/docs/functions/write-firebase-functions
 

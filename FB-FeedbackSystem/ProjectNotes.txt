@@ -92,3 +92,38 @@ app.get('/outlook', (request, response) => {
 });
  
 ------------------------------------------------------------------------------------------
+Available in github - https://github.com/bobbydreamer/FeedbackManagementSystem
+
+to update to github use below commands
+git status
+git add .
+git status
+git commit -m 'Added filename'
+git push 
+------------------------------------------------------------------------------------------
+Limitation on hosting multiple firebase apps on single project
+https://groups.google.com/forum/#!topic/firebase-talk/eHIcoJJ0oI4
+
+Last thread has a technique
+https://groups.google.com/forum/#!topic/firebase-talk/Khy0dpKYB_0
+
+------------------------------------------------------------------------------------------
+Firebase CLI - https://firebase.google.com/docs/cli/
+
+To use new project( from stashit to feedbacks)
+1. List - firebase list
+   See which project is current
+2. Check alias of current project - firebase use
+3. Update file .firebaserc to new project name
+4. Change to default alias - firebase use default
+------------------------------------------------------------------------------------------
+Things to do
+1. Sanitize Feedback for script injection
+2. Stash github
+3. Stash - update the feedback section 
+4. 
+
+
+------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------

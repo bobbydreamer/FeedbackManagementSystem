@@ -14,33 +14,6 @@ document.addEventListener('DOMContentLoaded', event => {
     const signInEmail = document.getElementById('btnEmail');
     const signout = document.getElementById('btnSignout');
 
-/*
-    function checkAuthorization(firebaseUser){
-        return new Promise( (resolve, reject) => {
-
-            var updates = {};
-            let FB_UsersRef = firebase.database().ref().child('/FB_Users/'+ firebaseUser.uid);
-            let getUser = FB_UsersRef.once('value').then(function(snap) {
-                // console.log('Snap = ',snap.val());
-                if(snap.val()!=null){
-                    updates['/FB_Users/'+ firebaseUser.uid] = firebaseUser.metadata.lastSignInTime;
-                    firebase.database().ref().update(updates);          
-                }
-                return snap.val() != null;
-            });
-
-            Promise.all([getUser]).then(function(results) {
-                if(results[0] == true){
-                    // console.log("IN");
-                    resolve('OK')                            
-                }                    
-                else
-                    reject('Unauthorized to use application');
-            });
-
-        });
-    }
-*/
 
     function updateUserDetails() {
         return new Promise( (resolve, reject) => {
@@ -196,7 +169,7 @@ document.addEventListener('DOMContentLoaded', event => {
                     }        
                 }
 
-            }).catch( (error) => { 
+            }).catch( (error) => {
                 // Getting the Error details.
                 // console.log('CATCH');
                 if(firebaseUser){

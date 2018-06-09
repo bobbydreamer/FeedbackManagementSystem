@@ -8,8 +8,8 @@ document.addEventListener('DOMContentLoaded', event => {
         const auth = firebase.auth();
         const promise = auth.signOut();
         promise.catch(e => {
-            console.log('Error : Stash : Logout : There was an unexpected error during logout');
-            console.log('Error : Stash : Logout : Message = ', e);
+            console.log('Error : Feedbacks : Logout : There was an unexpected error during logout');
+            console.log('Error : Feedbacks : Logout : Message = ', e);
         });
         promise.then(e => {
             setTimeout( () => {
