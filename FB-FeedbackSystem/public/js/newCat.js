@@ -83,6 +83,16 @@ btnAdd.addEventListener('click', e => {
         
     });
 
+    $('#userCategory').on('click','.delete', function(){
+        var temp = $(this).attr('id');
+    	console.log('TEMP = ',temp);
+
+        let updates = {};
+        updates['/FB_Categories/' + user.uid + '/CategoryList/' + temp ] = null;
+        updates['/FB_Categories/' + user.uid + '/messages/' + temp] = null;
+        firebase.database().ref().update(updates);            
+
+    });    
 
     function getCatDetails(){
         var appRef = firebase.database().ref().child('/FB_Categories/' + user.uid +'/CategoryList/');

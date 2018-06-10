@@ -9,6 +9,13 @@
     <!-- Your custom styles (optional) -->
     <style>
 
+button.delete {
+    background: none!important;
+    border: none;
+    padding: 0!important;
+    color:red;
+    cursor: pointer;
+}        
 
     </style>
 </head>
@@ -49,6 +56,10 @@
                         <div class="tab-content card">
                             <!--Panel 1-->
                             <div class="tab-pane fade active show" id="allApplications" role="tabpanel">
+                                    <div class="row">
+                                            <small class="ml-3 red-text" id="title2">Note: User account deletes are only virtual. Future permission to application is denied but account will exist.</small>
+                                    </div>
+                                        
                                 <div class="table-responsive">
                                     <table class="table large-header" id="appTable">
                                         <thead>
@@ -60,12 +71,11 @@
                                                 <th class="font-weight-bold dark-grey-text">Actions</th>
                                             </tr>                                        
                                         </thead>                                            
-                                        <tbody id="appTableBody" class="allUsers-placeholder">
-                                                                
-                                        </tbody>
-                                    </table>                
+                                        <tbody id="appTableBody" class="allUsers-placeholder"></tbody>
+                                    </table>                                                                            
                                 </div>
                             </div>
+
                             <!--/.Panel 1-->
                             <!--Panel 2-->
                             <div class="tab-pane fade" id="addNewApplication" role="tabpanel">                                

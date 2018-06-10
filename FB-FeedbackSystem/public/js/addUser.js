@@ -174,7 +174,20 @@ btnRegister.addEventListener('click', e => {
                 $('.allUsers-placeholder').html(template(userList));
             });            
     }
+
+    $('#appTableBody').on('click','.delete', function(){
+        var temp = $(this).attr('id');
+        // console.log('TEMP = ',temp);
         
+        let updates = {};
+        updates['/FB_Categories/' + temp ] = null;
+        updates['/FB_Users/details/' + temp ] = null;
+        updates['/FB_Users/user/' + temp ] = null;
+        firebase.database().ref().update(updates);            
+        
+    });
+    
+
     firebase.auth().onAuthStateChanged(firebaseUser => {
         if(firebaseUser){
             getUserDetails();

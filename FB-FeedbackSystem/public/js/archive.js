@@ -56,8 +56,11 @@ document.addEventListener('DOMContentLoaded', event => {
         return new Promise( (resolve, reject) => {
             var catRef = firebase.database().ref().child('/FB_Categories/' + uid +'/CategoryList/');
             catRef.on('value', function(snap) {
-                if(snap.val() == null) return 0;
-                catList = Object.keys(snap.val());
+                if(snap.val() == null){
+                    catList = ['none'];
+                }else{
+                    catList = Object.keys(snap.val());
+                }                 
                 // console.log('catList = ',catList);
                 resolve('OK');
             });                            
