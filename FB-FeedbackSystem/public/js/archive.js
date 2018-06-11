@@ -109,6 +109,7 @@ document.addEventListener('DOMContentLoaded', event => {
     function showArchive(){        
 //            var messagesRef = firebase.database().ref().child('FB_Archive/messages/').limitToLast(200);
             var temp = {}, allMessagesObj = [], allMessages = {};
+            var tempDiv = document.createElement("div");            
 //            let getMessagesRef = messagesRef.on('value', function(snap) {
                 // console.log('Snap = ',snap);
   //                  if(snap.val() == null) return 0;                    
@@ -127,7 +128,9 @@ document.addEventListener('DOMContentLoaded', event => {
                         temp['name'] = allMessages[keys[i]].name;
                         temp['email'] = allMessages[keys[i]].email;
                         temp['dateSaved'] = formattedDate(allMessages[keys[i]].dateSaved);
-                        temp['message'] = allMessages[keys[i]].message;
+                        // temp['message'] = allMessages[keys[i]].message;
+                        $(tempDiv).html(allMessages[keys[i]].message);
+                        temp['message'] = tempDiv.innerText;                        
                         temp['mid'] = keys[i];
                         temp['category'] = allMessages[keys[i]].category;
 //                        temp['CategoryList'] = catList;

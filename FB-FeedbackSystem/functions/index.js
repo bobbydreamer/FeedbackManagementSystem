@@ -150,13 +150,15 @@ exports.checkAuthorization = functions.https.onCall((data, context) => {
 
 exports.writeFeedback = functions.https.onCall((data, context) => {
     // Checking that the user is authenticated.
-    if (!context.auth) {
-        // Throwing an HttpsError so that the client gets the error details.
-        throw new functions.https.HttpsError('failed-precondition', 'User not authorized to usee the application');
-    }
-      
+    // Have to comment the below condition because feedbacks are going to come in from other projects, UID is only unique within project.
+    // Same user in different project get different UID
+    // if (!context.auth) {
+    //     // Throwing an HttpsError so that the client gets the error details.
+    //     throw new functions.https.HttpsError('failed-precondition', 'User not authorized to usee the application');
+    // }
+
     // Authentication / user information is automatically added to the request.
-    const uid = context.auth.uid;
+    //const uid = context.auth.uid;
 
     const feedback = data.feedback;
     const yearweek = data.yearweek;

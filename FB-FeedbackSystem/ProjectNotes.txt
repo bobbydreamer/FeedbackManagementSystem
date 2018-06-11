@@ -118,9 +118,7 @@ To use new project( from stashit to feedbacks)
 4. Change to default alias - firebase use default
 ------------------------------------------------------------------------------------------
 Things to do
-1. Sanitize Feedback for script injection
-2. Stash github
-3. Stash - update the feedback section 
+1. Pagination - KATO Fiddle pagination
 4. 
 
 
