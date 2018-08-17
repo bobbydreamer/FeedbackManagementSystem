@@ -123,5 +123,14 @@ Things to do
 
 
 ------------------------------------------------------------------------------------------
+Rules - 17/August/2018
+* Added rules after getting a notification from Google saying unauthorized users can get data accessing the URL directly.
+So, wrote below rules, only authorized users can access data.
+{
+  "rules": {
+        ".read": "root.child('FB_Users').child('details').hasChild(auth.uid) == true",
+        ".write": "root.child('FB_Users').child('details').hasChild(auth.uid) == true"
+  }
+}
 ------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------
